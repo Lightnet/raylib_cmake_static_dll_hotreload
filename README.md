@@ -2,6 +2,9 @@
 
 # License: MIT
 
+# Raylib 5.5
+# RayGUI 4.0
+
 # Information:
  Use Grok Beta 3 AI agent to improve the cmake build raylib and raygui example application.
 
@@ -23,6 +26,11 @@
  * core.c is compiled into a shared library (core.dll), and main.c loads it dynamically using LoadLibraryExA.
  * Function pointers bridge Raylib/Raygui functions from main.c to core.dll.
  * A shadow copy (core_temp_X.dll) is used to avoid locking core.dll, enabling hot reload.
+
+CMakeLists.txt
+```
+set(USE_DLL_MODE OFF CACHE BOOL "Build with DLL support (hot reload enabled)" FORCE)
+```
 
 # RaylibExample: Static and DLL Hot Reload Setup
 
