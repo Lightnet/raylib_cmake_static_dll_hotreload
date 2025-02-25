@@ -2,8 +2,8 @@
 
 # License: MIT
 
-# Raylib 5.5
-# RayGUI 4.0
+# raylib 5.5
+# raygui 4.0
 
 # Information:
  Use Grok Beta 3 AI agent to improve the cmake build raylib and raygui example application.

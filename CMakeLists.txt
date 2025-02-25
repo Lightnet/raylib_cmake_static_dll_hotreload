@@ -33,12 +33,12 @@ message(STATUS "USE_DLL_MODE: ${USE_DLL_MODE}")
 if (USE_DLL_MODE)
     # Enable DLL mode: Build core as a shared library (core.dll)
     set(BUILD_LIBTYPE_SHARED ON CACHE BOOL "Build core as a shared library" FORCE)
-    add_definitions(-DCORE_USE_LIBTYPE_SHARED)  // Define macro for main.c to use DLL logic
-    add_definitions(-DBUILD_LIBTYPE_SHARED)    // Define macro for core.c to export DLL functions
+    add_definitions(-DCORE_USE_LIBTYPE_SHARED)  # Define macro for main.c to use DLL logic
+    add_definitions(-DBUILD_LIBTYPE_SHARED)    # Define macro for core.c to export DLL functions
 else()
     # Static mode: Build core statically into the executable
     set(BUILD_LIBTYPE_SHARED OFF CACHE BOOL "Build core statically" FORCE)
-    remove_definitions(-DCORE_USE_LIBTYPE_SHARED)  // Remove DLL-specific macros
+    remove_definitions(-DCORE_USE_LIBTYPE_SHARED)  # Remove DLL-specific macros
     remove_definitions(-DBUILD_LIBTYPE_SHARED)
 endif()
 message(STATUS "BUILD_LIBTYPE_SHARED: ${BUILD_LIBTYPE_SHARED}")
@@ -70,29 +70,29 @@ add_executable(${PROJECT_NAME} src/main.c)
 # Set include directories for the executable
 # Ensures main.c can find headers from project, Raylib, and Raygui
 target_include_directories(${PROJECT_NAME} PUBLIC 
-    ${CMAKE_SOURCE_DIR}/include          // Custom project includes (if any)
-    ${raylib_SOURCE_DIR}/src             // Raylib source headers
-    ${raygui_SOURCE_DIR}/src             // Raygui source headers
+    ${CMAKE_SOURCE_DIR}/include          # Custom project includes (if any)
+    ${raylib_SOURCE_DIR}/src             # Raylib source headers
+    ${raygui_SOURCE_DIR}/src             # Raygui source headers
 )
 
 # Configure core library based on build mode
 if (USE_DLL_MODE)
     # DLL mode: Build core.c as a shared library (core.dll)
     add_library(core SHARED src/core.c)
-    target_link_libraries(core PUBLIC raylib_static)  // Link core.dll with static Raylib
+    target_link_libraries(core PUBLIC raylib_static)  # Link core.dll with static Raylib
 else()
     # Static mode: Build core.c as a static library and link it into the executable
     add_library(core STATIC src/core.c)
-    target_link_libraries(${PROJECT_NAME} PUBLIC core)  // Link core into RaylibExample.exe
-    target_link_libraries(core PUBLIC raylib_static)    // Link core with static Raylib
+    target_link_libraries(${PROJECT_NAME} PUBLIC core)  # Link core into RaylibExample.exe
+    target_link_libraries(core PUBLIC raylib_static)    # Link core with static Raylib
 endif()
 
 # Set include directories for the core library
 # Ensures core.c can find headers from project, Raylib, and Raygui
 target_include_directories(core PUBLIC 
-    ${CMAKE_SOURCE_DIR}/include          // Custom project includes (if any)
-    ${raylib_SOURCE_DIR}/src             // Raylib source headers
-    ${raygui_SOURCE_DIR}/src             // Raygui source headers
+    ${CMAKE_SOURCE_DIR}/include          # Custom project includes (if any)
+    ${raylib_SOURCE_DIR}/src             # Raylib source headers
+    ${raygui_SOURCE_DIR}/src             # Raygui source headers
 )
 
 # Set output name for core library (core.dll or core.lib)
@@ -110,7 +110,7 @@ endif()
 
 # MSVC-specific compile definitions to suppress warnings
 if (MSVC)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS /wd4267)  // Disable deprecated warnings and size_t conversion warnings
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS /wd4267)  # Disable deprecated warnings and size_t conversion warnings
 endif()
 
 # Post-build step for DLL mode: Copy core.dll to the runtime directory
